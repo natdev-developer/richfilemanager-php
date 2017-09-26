@@ -2,6 +2,9 @@
 
 namespace RFM\Repository;
 
+use function RFM\app;
+use function RFM\config;
+
 /**
  *    BaseStorage PHP class
  *

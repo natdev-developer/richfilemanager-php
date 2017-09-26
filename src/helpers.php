@@ -1,14 +1,16 @@
 <?php
 
+namespace RFM;
+
 use Illuminate\Container\Container;
 
-if (! function_exists('app')) {
+if (! function_exists(__NAMESPACE__ . '\app')) {
     /**
      * Get the available container instance.
      *
      * @param  string  $make
      * @param  array   $parameters
-     * @return mixed|RFM\Application
+     * @return mixed|\RFM\Application
      */
     function app($make = null, $parameters = [])
     {
@@ -20,7 +22,7 @@ if (! function_exists('app')) {
     }
 }
 
-if (! function_exists('config')) {
+if (! function_exists(__NAMESPACE__ . '\config')) {
     /**
      * Get / set the specified configuration value.
      *
@@ -44,7 +46,7 @@ if (! function_exists('config')) {
     }
 }
 
-if (! function_exists('request')) {
+if (! function_exists(__NAMESPACE__ . '\request')) {
     /**
      * Return request singleton instance
      *
@@ -56,7 +58,7 @@ if (! function_exists('request')) {
     }
 }
 
-if (! function_exists('logger')) {
+if (! function_exists(__NAMESPACE__ . '\logger')) {
     /**
      * Return logger singleton instance
      *

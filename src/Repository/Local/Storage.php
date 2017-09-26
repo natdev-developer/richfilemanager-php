@@ -2,6 +2,7 @@
 
 namespace RFM\Repository\Local;
 
+use function RFM\app;
 use RFM\Facade\Log;
 use RFM\Repository\BaseStorage;
 use RFM\Repository\StorageInterface;

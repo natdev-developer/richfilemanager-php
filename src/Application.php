@@ -4,9 +4,9 @@ namespace RFM;
 
 use Illuminate\Config\Repository;
 use Illuminate\Container\Container;
-use Symfony\Component\HttpFoundation\Request;
-use RFM\Repository\StorageInterface;
 use RFM\API\ApiInterface;
+use RFM\Repository\StorageInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 // path to "application" folder
 defined('FM_APP_PATH') or define('FM_APP_PATH', dirname(__FILE__));
@@ -170,10 +170,10 @@ class Application extends Container {
 
             // update logger configuration
             if (config("{$name}.logger.enabled") === true) {
-                logger()->enabled = true;
+                \RFM\logger()->enabled = true;
             }
             if (is_string(config("{$name}.logger.file"))) {
-                logger()->file = config("{$name}.logger.file");
+                \RFM\logger()->file = config("{$name}.logger.file");
             }
         }
     }
@@ -350,7 +350,7 @@ class Application extends Container {
         if ($arguments) {
             $log_message .= ', arguments: ' . json_encode($arguments);
         }
-        logger()->log($log_message);
+        \RFM\logger()->log($log_message);
 
         if(request()->isXmlHttpRequest()) {
             $error_object = [
@@ -429,5 +429,5 @@ class Application extends Container {
     public function version()
     {
         return 'RichFilemanager PHP connector v1.0.7';
-}
+    }
 }

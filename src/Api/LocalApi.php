@@ -2,6 +2,8 @@
 
 namespace RFM\Api;
 
+use function RFM\app;
+use function RFM\request;
 use RFM\Facade\Input;
 use RFM\Facade\Log;
 use RFM\Repository\Local\ItemModel;

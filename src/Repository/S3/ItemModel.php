@@ -2,6 +2,7 @@
 
 namespace RFM\Repository\S3;
 
+use function RFM\app;
 use RFM\Facade\Log;
 use RFM\Repository\BaseItemModel;
 
