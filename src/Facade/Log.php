@@ -10,6 +10,6 @@ class Log
      */
     public static function info($message)
     {
-        \RFM\logger()->log($message);
+        \RFM\logger()->info($message);
     }
 }
