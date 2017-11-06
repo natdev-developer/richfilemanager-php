@@ -5,11 +5,11 @@ namespace RFM;
 use Illuminate\Config\Repository;
 use Illuminate\Container\Container;
 use Monolog\Handler\NullHandler;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\UidProcessor;
 use Monolog\Processor\WebProcessor;
-use Psr\Log\LoggerInterface;
 use RFM\API\ApiInterface;
 use RFM\Repository\StorageInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -184,7 +184,13 @@ class Application extends Container {
 
             // update logger configuration
             if (config("{$name}.logger.enabled") === true) {
-                foreach (config("{$name}.logger.handlers") as $handler) {
+                $handlers = config("{$name}.logger.handlers", []);
+
+                if (is_string(config("{$name}.logger.file"))) {
+                    $handlers[] = new StreamHandler(config("{$name}.logger.file"));
+                }
+
+                foreach ($handlers as $handler) {
                     $logger->pushHandler($handler);
                 }
             } else {

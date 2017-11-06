@@ -3,7 +3,7 @@ PHP connector for Rich Filemanager
 
 This package is the part of [RichFilemanager](https://github.com/servocoder/RichFilemanager) project.
 
-Requires PHP >= 5.4.0
+Requires PHP >= 5.6.0
 
 
 Introduction
@@ -409,6 +409,9 @@ Debug and Logging
 
 If you have any problem using RichFilemanager you may want to see what's happening.
 
+
+#### Version <= 1.08  
+ 
 All logs are stored at your local filesystem, so you have to configure your [Local filesystem storage](#local-filesystem-storage)
 
 To enable logger set `logger`.`enabled` option to _true_, also you can specify full path to logfile with `logger`.`file` option:
@@ -428,6 +431,27 @@ Notice that, by default, logs are disabled and logfile location is defined by `s
 - Linux: _/tmp/filemanager.log_
 - Windows 7: _C:\Users\\%username%\AppData\Local\Temp\filemanager.log_
 
+
+#### Version >= 1.0.9
+
+RichFilemanager now has support to [Monolog](https://github.com/Seldaek/monolog).  
+
+You can use Monolog handlers as many as you want:   
+
+```php
+$config = [
+    'logger' => [
+        'enabled' => true,
+        'handlers' => [
+            new \Monolog\Handler\RotatingFileHandler($filename, 7, \Monolog\Logger::INFO)        
+        ],
+    ],
+];
+
+$local = new \RFM\Repository\Local\Storage($config);
+```
+
+> If (and only if) the option `file` is provided, it will be converted to [Monolog\Handler\StreamHandler](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/StreamHandler.php) 
 
 
 MIT LICENSE

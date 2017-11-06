@@ -3,8 +3,6 @@
 namespace RFM;
 
 use Illuminate\Container\Container;
-use Monolog\Logger;
-use Psr\Log\LoggerInterface;
 
 if (! function_exists(__NAMESPACE__ . '\app')) {
     /**
@@ -64,7 +62,7 @@ if (! function_exists(__NAMESPACE__ . '\logger')) {
     /**
      * Return logger singleton instance
      *
-     * @return Logger
+     * @return \Monolog\Logger
      */
     function logger()
     {
