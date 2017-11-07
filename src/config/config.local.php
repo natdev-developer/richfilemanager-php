@@ -19,6 +19,10 @@ $config = [
          * By default the application writes logs to "filemanager.log" file that located at sys_get_temp_dir()
          */
         "file" => null,
+        /**
+         * Array of Monolog handlers (\Monolog\Handler\HandlerInterface) specifying their log levels
+         */
+        'handlers' => []
     ],
     /**
      * General options section

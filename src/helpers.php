@@ -62,7 +62,7 @@ if (! function_exists(__NAMESPACE__ . '\logger')) {
     /**
      * Return logger singleton instance
      *
-     * @return \RFM\Logger
+     * @return \Monolog\Logger
      */
     function logger()
     {

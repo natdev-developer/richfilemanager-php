@@ -4,6 +4,12 @@ namespace RFM;
 
 use Illuminate\Config\Repository;
 use Illuminate\Container\Container;
+use Monolog\Handler\NullHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Monolog\Processor\IntrospectionProcessor;
+use Monolog\Processor\UidProcessor;
+use Monolog\Processor\WebProcessor;
 use RFM\API\ApiInterface;
 use RFM\Repository\StorageInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -131,7 +137,13 @@ class Application extends Container {
     protected function registerLoggerBindings()
     {
         $this->singleton('logger', function () {
-            return new Logger();
+            $logger = new Logger('RFM');
+
+            $logger->pushProcessor(new IntrospectionProcessor());
+            $logger->pushProcessor(new WebProcessor());
+            $logger->pushProcessor(new UidProcessor());
+
+            return $logger;
         });
     }
 
@@ -168,12 +180,21 @@ class Application extends Container {
             $config = $this->mergeConfigs(require $path, $options);
             $this->make('config')->set($name, $config);
 
+            $logger = \RFM\logger();
+
             // update logger configuration
             if (config("{$name}.logger.enabled") === true) {
-                \RFM\logger()->enabled = true;
-            }
-            if (is_string(config("{$name}.logger.file"))) {
-                \RFM\logger()->file = config("{$name}.logger.file");
+                $handlers = config("{$name}.logger.handlers", []);
+
+                if (is_string(config("{$name}.logger.file"))) {
+                    $handlers[] = new StreamHandler(config("{$name}.logger.file"));
+                }
+
+                foreach ($handlers as $handler) {
+                    $logger->pushHandler($handler);
+                }
+            } else {
+                $logger->pushHandler(new NullHandler());
             }
         }
     }
@@ -347,10 +368,7 @@ class Application extends Container {
     public function error($label, $arguments = [])
     {
         $log_message = 'Error code: ' . $label;
-        if ($arguments) {
-            $log_message .= ', arguments: ' . json_encode($arguments);
-        }
-        \RFM\logger()->log($log_message);
+        \RFM\logger()->error($log_message, ['arguments' => $arguments]);
 
         if(request()->isXmlHttpRequest()) {
             $error_object = [
