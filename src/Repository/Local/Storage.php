@@ -260,7 +260,7 @@ class Storage extends BaseStorage implements StorageInterface
 		}
 
 		$zip = new \ZipArchive();
-		if (!$zip->open($destination, \ZipArchive::CREATE)) {
+        if (!$zip->open($destination, \ZipArchive::CREATE|\ZipArchive::OVERWRITE)) {
 			return false;
 		}
 
