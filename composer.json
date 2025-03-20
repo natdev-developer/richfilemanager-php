@@ -25,11 +25,11 @@
     }
   ],
   "require": {
-    "php": ">= 5.6.0",
-    "symfony/http-foundation": "~2.8|~3.4|~4.0",
-    "illuminate/config": "5.8.*",
-    "illuminate/container": "5.8.*",
-    "monolog/monolog": "^1.23"
+    "php": "^8.3",
+    "symfony/http-foundation": "^v7.2.3",
+    "illuminate/config": "^12.*",
+    "illuminate/container": "^12.*",
+    "monolog/monolog": "^3.8.*"
   },
   "autoload": {
     "psr-4": {
